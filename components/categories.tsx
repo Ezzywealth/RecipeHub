@@ -2,15 +2,16 @@ import React from 'react';
 import { FlatList, Pressable, Text, View, StyleSheet, ScrollView, Touchable } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks';
-import { setActiveCategory } from '../redux/slices/fetchRecipe';
+import { setActiveCategory, setActiveRecipe } from '../redux/slices/fetchRecipe';
 
 type Prop = {
-	handleFetchRecipe: (recipe: string) => void;
+	handleFetchRecipe: ({ recipe, id }) => void;
 };
 const Categories = ({ handleFetchRecipe }: Prop) => {
 	const dispatch = useDispatch();
 	const categories = useAppSelector((state) => state.categories);
 	const activeCategory = useAppSelector((state) => state.activeCategory);
+	const activeRecipeName = useAppSelector((state) => state.activeRecipeName);
 
 	const handleCategorySelect = (id: number) => {
 		dispatch(setActiveCategory(id));
@@ -24,15 +25,21 @@ const Categories = ({ handleFetchRecipe }: Prop) => {
 				keyExtractor={(item) => item.id.toString()}
 				renderItem={({ item }) => (
 					<Pressable onPress={() => handleCategorySelect(item.id)}>
-						<Text style={styles.category}>{item.name}</Text>
+						<Text
+							style={{
+								...styles.category,
+								...(activeCategory.name === item.name ? styles.activeCategory : {}),
+							}}>
+							{item.name}
+						</Text>
 					</Pressable>
 				)}
 			/>
 
 			<ScrollView style={styles.subCategoryContainer} horizontal>
 				{activeCategory?.items.map((item) => (
-					<Pressable key={item.id} onPress={() => handleFetchRecipe(item.name)}>
-						<Text style={styles.item}>{item.name}</Text>
+					<Pressable key={item.id} onPress={() => handleFetchRecipe({ recipe: item.name, id: item.id })}>
+						<Text style={{ ...styles.item, ...(activeRecipeName === item.name ? styles.activeSubCategory : {}) }}>{item.name}</Text>
 					</Pressable>
 				))}
 			</ScrollView>
@@ -49,19 +56,30 @@ const styles = StyleSheet.create({
 	categoriesContainer: {
 		flexDirection: 'row',
 		marginTop: 30,
-		borderColor: '#ddd',
 		gap: 20,
 		alignItems: 'center',
 		height: 30,
 		justifyContent: 'center',
 	},
 	category: {
+		shadowColor: '#fff',
+		borderColor: 'coral',
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.2,
+		shadowRadius: 4,
 		elevation: 2,
-		fontSize: 18,
-		borderStyle: 'solid',
+		fontSize: 16,
+		color: '#212121',
 		paddingVertical: 5,
 		paddingHorizontal: 15,
-		borderColor: '#ddd',
+		borderWidth: 1,
+	},
+	activeCategory: {
+		backgroundColor: 'coral',
+		color: '#fff',
 	},
 	subCategoryContainer: {
 		flexDirection: 'row',
@@ -70,13 +88,25 @@ const styles = StyleSheet.create({
 		gap: 10,
 		marginHorizontal: 10,
 	},
+	activeSubCategory: {
+		backgroundColor: 'coral',
+		color: '#fff',
+	},
 	item: {
 		textTransform: 'capitalize',
 		borderStyle: 'solid',
 		paddingVertical: 5,
 		paddingHorizontal: 15,
-		borderColor: '#ddd',
+		borderColor: 'coral',
+		borderWidth: 1,
 		elevation: 2,
+		shadowColor: '#fff',
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.2,
+		shadowRadius: 4,
 		height: 30,
 		marginHorizontal: 2,
 	},

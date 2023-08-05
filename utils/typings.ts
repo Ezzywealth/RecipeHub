@@ -25,9 +25,11 @@ export type AppState = {
 	recipes: [];
 	recipeLoading: boolean;
 	recipeError: string;
-	recipe: {};
+	recipeDetails: {};
 	recipeByIdLoading: boolean;
 	recipeByIdError: string;
 	activeCategory: CategoryProp;
+	activeRecipeId: number;
 	categories: CategoryProp[];
+	activeRecipeName: string;
 };
