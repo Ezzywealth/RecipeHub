@@ -3,8 +3,8 @@ import axios from 'axios';
 import menuCategories from '../../utils/category';
 import { AppState, AsyncThunkReturn, RecipesProp } from '../../utils/typings';
 
-const recipesUrl = process.env.RECIPE_SEARCH_URL;
-const recipeUrl = process.env.RECIPE_DETAILS_URL;
+const recipesUrl = process.env.EXPO_PUBLIC_RECIPE_SEARCH_URL;
+const recipeUrl = process.env.EXPO_PUBLIC_RECIPE_DETAILS_URL;
 
 const initialState: AppState = {
 	recipes: [],
@@ -18,9 +18,12 @@ const initialState: AppState = {
 };
 
 export const fetchRecipes = createAsyncThunk('fetchRecipes', async (recipe: string) => {
+	console.log(recipe);
+	console.log(recipesUrl);
+	if (!recipe) return;
 	const { data } = await axios.get(`${recipesUrl}=${recipe}`);
 	console.log(data);
-	return data;
+	return data.data.recipes;
 });
 
 const recipeSlice = createSlice({

@@ -1,11 +1,13 @@
 import React from 'react';
 import { FlatList, Pressable, Text, View, StyleSheet, ScrollView, Touchable } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks';
-import { CategoryProp } from '../utils/typings';
 import { setActiveCategory } from '../redux/slices/fetchRecipe';
 
-const Categories = () => {
+type Prop = {
+	handleFetchRecipe: (recipe: string) => void;
+};
+const Categories = ({ handleFetchRecipe }: Prop) => {
 	const dispatch = useDispatch();
 	const categories = useAppSelector((state) => state.categories);
 	const activeCategory = useAppSelector((state) => state.activeCategory);
@@ -29,9 +31,9 @@ const Categories = () => {
 
 			<ScrollView style={styles.subCategoryContainer} horizontal>
 				{activeCategory?.items.map((item) => (
-					<Text key={item.id} style={styles.item}>
-						{item.name}
-					</Text>
+					<Pressable key={item.id} onPress={() => handleFetchRecipe(item.name)}>
+						<Text style={styles.item}>{item.name}</Text>
+					</Pressable>
 				))}
 			</ScrollView>
 		</View>
