@@ -7,6 +7,7 @@ import { setActiveCategory, setActiveRecipe } from '../redux/slices/fetchRecipe'
 type Prop = {
 	handleFetchRecipe: ({ recipe, id }) => void;
 };
+
 const Categories = ({ handleFetchRecipe }: Prop) => {
 	const dispatch = useDispatch();
 	const categories = useAppSelector((state) => state.categories);

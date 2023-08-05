@@ -6,7 +6,6 @@ const RecipeCard = ({ item, handleRecipeView }) => {
 	return (
 		<View style={styles.container}>
 			<Image style={styles.image} source={item.image_url} alt={item.publisher} contentFit='cover' transition={1000} />
-
 			<View style={styles.details}>
 				<Text style={styles.detailsEle}>Name: </Text>
 				<Text style={styles.name}>{item?.title?.split(' ').slice(0, 1).join(' ')}</Text>

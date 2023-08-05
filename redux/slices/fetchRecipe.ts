@@ -26,10 +26,10 @@ export const fetchRecipes = createAsyncThunk('fetchRecipes', async (recipe: stri
 });
 
 export const fetchRecipeDetail = createAsyncThunk('fetchRecipeDetail', async (id: string) => {
+	console.log(id);
 	if (!id) return;
-	const { data } = await axios.get(`${recipeUrl}=${id}`);
-
-	return data.data.recipes;
+	const { data } = await axios.get(`${recipeUrl}/${id}`);
+	return data.data;
 });
 
 const recipeSlice = createSlice({
@@ -59,6 +59,18 @@ const recipeSlice = createSlice({
 			state.recipeError = 'There was an error fetching this recipe';
 			state.recipeLoading = false;
 			state.recipes = [];
+		});
+		builders.addCase(fetchRecipeDetail.pending, (state, action) => {
+			state.recipeByIdLoading = true;
+		});
+		builders.addCase(fetchRecipeDetail.fulfilled, (state, action) => {
+			state.recipeByIdLoading = false;
+			state.recipeDetails = action.payload;
+			state.recipeByIdError = '';
+		});
+		builders.addCase(fetchRecipeDetail.rejected, (state, action) => {
+			state.recipeByIdError = 'There was an error fetching the details of this recipe';
+			state.recipeByIdLoading = false;
 		});
 	},
 });

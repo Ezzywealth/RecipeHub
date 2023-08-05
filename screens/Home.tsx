@@ -10,7 +10,7 @@ type Props = {
 	recipe: string;
 	id: number;
 };
-const Home = () => {
+const Home = ({ navigation }) => {
 	const [recipeModal, setRecipeModal] = useState(false);
 	const dispatch = useAppDispatch();
 	const category = useAppSelector((state) => state.activeCategory);
@@ -26,22 +26,18 @@ const Home = () => {
 		dispatch(setActiveRecipe({ recipe: category.items[0].name, id: 0 }));
 	}, []);
 
-	const handleFetchRecipe = async ({ recipe, id }: Props) => {
-		const result = await dispatch(fetchRecipes(recipe));
-		const res = await dispatch(setActiveRecipe({ recipe, id }));
+	const handleFetchRecipe = ({ recipe, id }: Props) => {
+		dispatch(fetchRecipes(recipe));
+		dispatch(setActiveRecipe({ recipe, id }));
 	};
 
-	const handleRecipeView = async (id: string) => {
-		await dispatch(fetchRecipeDetail(id));
+	const handleRecipeView = (id: string) => {
+		dispatch(fetchRecipeDetail(id));
+		navigation.navigate('RecipeDetails');
 	};
 
 	return (
 		<View>
-			{recipeModal && (
-				<Modal>
-					<View></View>
-				</Modal>
-			)}
 			<Categories handleFetchRecipe={handleFetchRecipe} />
 			<Text style={styles.header}> List of different {activeRecipeName} menus</Text>
 			{recipeLoading ? (
@@ -59,8 +55,10 @@ export default Home;
 
 const styles = StyleSheet.create({
 	listContainer: {
-		marginHorizontal: 10,
+		marginHorizontal: 5,
 		marginBottom: 40,
+		// flex: 1,
+		paddingBottom: 40,
 		marginTop: 20,
 	},
 	header: {
