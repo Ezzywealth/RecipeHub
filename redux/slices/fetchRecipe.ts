@@ -10,7 +10,18 @@ const initialState: AppState = {
 	recipes: [],
 	recipeLoading: false,
 	recipeError: null,
-	recipeDetails: {},
+	recipeDetails: {
+		recipe: {
+			cooking_time: 0,
+			id: '',
+			image_url: '',
+			ingredients: [],
+			publisher: '',
+			servings: 0,
+			source_url: '',
+			title: '',
+		},
+	},
 	recipeByIdLoading: false,
 	recipeByIdError: null,
 	activeCategory: menuCategories[0],
@@ -26,7 +37,6 @@ export const fetchRecipes = createAsyncThunk('fetchRecipes', async (recipe: stri
 });
 
 export const fetchRecipeDetail = createAsyncThunk('fetchRecipeDetail', async (id: string) => {
-	console.log(id);
 	if (!id) return;
 	const { data } = await axios.get(`${recipeUrl}/${id}`);
 	return data.data;

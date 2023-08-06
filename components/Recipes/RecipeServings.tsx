@@ -10,7 +10,7 @@ const RecipeServings = ({ recipe }) => {
 			<View style={styles.container}>
 				<View style={styles.servingEle}>
 					<Icon name='clockcircleo' size={20} color='coral' />
-					<Text style={styles.servingsText}>{recipe.cooking_time}</Text>
+					<Text style={styles.servingsText}>{recipe.cooking_time} mins</Text>
 				</View>
 				<View style={styles.servingEle}>
 					<IonIcons name='people' size={25} color='coral' />
@@ -32,11 +32,10 @@ const styles = StyleSheet.create({
 	container: {
 		marginTop: 10,
 		flexDirection: 'row',
-		// height: 50,
 		width: '100%',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingHorizontal: 15,
+		paddingHorizontal: 10,
 		paddingVertical: 10,
 		flexWrap: 'wrap',
 	},
