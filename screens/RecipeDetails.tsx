@@ -3,6 +3,7 @@ import { Text, StyleSheet, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { useAppSelector } from '../redux/hooks';
 import { Image } from 'expo-image';
+import RecipeServings from '../components/Recipes/RecipeServings';
 
 const RecipeDetails = () => {
 	// const [loading, setLoading] = useState(false);
@@ -21,7 +22,8 @@ const RecipeDetails = () => {
 			) : (
 				<View>
 					<Text>{recipe.title}</Text>
-					<Image style={styles.image} source={recipe.image_url} alt={recipe.publisher} contentFit='cover' />
+					<Image style={styles.image} source={recipe?.image_url} alt={recipe?.publisher} contentFit='cover' />
+					<RecipeServings recipe={recipe} />
 				</View>
 			)}
 		</View>

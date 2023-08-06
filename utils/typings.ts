@@ -25,11 +25,30 @@ export type AppState = {
 	recipes: [];
 	recipeLoading: boolean;
 	recipeError: string;
-	recipeDetails: {};
+	recipeDetails: RecipeProp;
 	recipeByIdLoading: boolean;
 	recipeByIdError: string;
 	activeCategory: CategoryProp;
 	activeRecipeId: number;
 	categories: CategoryProp[];
 	activeRecipeName: string;
+};
+
+export type RecipeProp = {
+	recipe: {
+		cooking_time: number;
+		id: string;
+		image_url: string;
+		ingredients: IngredientProp[];
+		publisher: string;
+		servings: number;
+		source_url: string;
+		title: string;
+	};
+};
+
+export type IngredientProp = {
+	description: string;
+	quantity: number;
+	unit: string;
 };
