@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 	container: {
 		marginTop: 10,
 		flexDirection: 'row',
-		// height: 50,
 		width: '100%',
 		justifyContent: 'space-between',
 		alignItems: 'center',

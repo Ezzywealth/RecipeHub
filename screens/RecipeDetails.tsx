@@ -4,6 +4,7 @@ import * as Progress from 'react-native-progress';
 import { useAppSelector } from '../redux/hooks';
 import { Image } from 'expo-image';
 import RecipeServings from '../components/Recipes/RecipeServings';
+import RecipeIngredients from '../components/Recipes/RecipeIngredients';
 
 const RecipeDetails = () => {
 	// const [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ const RecipeDetails = () => {
 					<Text>{recipe.title}</Text>
 					<Image style={styles.image} source={recipe?.image_url} alt={recipe?.publisher} contentFit='cover' />
 					<RecipeServings recipe={recipe} />
+					<RecipeIngredients recipe={recipe} />
 				</View>
 			)}
 		</View>
