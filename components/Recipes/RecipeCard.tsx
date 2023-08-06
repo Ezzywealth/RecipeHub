@@ -1,23 +1,18 @@
 import React from 'react';
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Image } from 'expo-image';
 
 const RecipeCard = ({ item, handleRecipeView }) => {
+	const windowWidth = Dimensions.get('window').width;
+	const cardWidth = windowWidth / 2 - 10;
 	return (
-		<View style={styles.container}>
+		<Pressable onPress={() => handleRecipeView(item.id)} style={[styles.container, { width: cardWidth }]}>
 			<Image style={styles.image} source={item.image_url} alt={item.publisher} contentFit='cover' transition={1000} />
 			<View style={styles.details}>
-				<Text style={styles.detailsEle}>Name: </Text>
-				<Text style={styles.name}>{item?.title?.split(' ').slice(0, 1).join(' ')}</Text>
+				<Text style={styles.name}>{item?.title.length > 20 ? `${item?.title.substring(0, 20)}...` : item?.title}</Text>
+				<Text style={styles.publisher}>By {item?.publisher}</Text>
 			</View>
-			<View style={styles.details}>
-				<Text style={styles.detailsEle}>Publisher:</Text>
-				<Text style={styles.name}>{item?.publisher}</Text>
-			</View>
-			<Pressable onPress={() => handleRecipeView(item.id)}>
-				<Text style={styles.viewMore}>view details</Text>
-			</Pressable>
-		</View>
+		</Pressable>
 	);
 };
 
@@ -25,6 +20,7 @@ export default RecipeCard;
 
 const styles = StyleSheet.create({
 	container: {
+		col: 1,
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -39,45 +35,34 @@ const styles = StyleSheet.create({
 		},
 		shadowOpacity: 0.2,
 		shadowRadius: 4,
-		flex: 1,
 	},
 	image: {
 		flex: 1,
 		backgroundColor: '#0553',
-		height: 100,
+		height: 120,
 		width: '100%',
 		borderRadius: 5,
 	},
 	publisher: {
-		fontWeight: 'bold',
-		fontSize: 20,
+		fontSize: 11,
+		fontWeight: 'normal',
+		justifyContent: 'center',
+		flexDirection: 'row',
+		paddingHorizontal: 10,
+		marginTop: 2,
+		fontStyle: 'italic',
 	},
 
 	details: {
-		paddingHorizontal: 5,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'flex-start',
-		width: '100%',
-	},
-	detailsEle: {
-		flexDirection: 'row',
-		alignItems: 'flex-start',
-		justifyContent: 'flex-start',
-		fontWeight: 'bold',
-		fontSize: 14,
+		paddingVertical: 5,
 	},
 	name: {
-		fontSize: 13,
-	},
-	viewMore: {
-		textDecorationLine: 'underline',
-		textTransform: 'capitalize',
-		paddingBottom: 2,
-		textDecorationColor: 'coral',
-		color: 'coral',
-		fontSize: 13,
+		fontSize: 15,
 		fontWeight: 'bold',
-		letterSpacing: 1.2,
+		display: 'flex',
+		justifyContent: 'center',
+		flexDirection: 'row',
+		paddingHorizontal: 10,
+		flexWrap: 'wrap',
 	},
 });

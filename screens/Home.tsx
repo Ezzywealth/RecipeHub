@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View, StyleSheet, Modal } from 'react-native';
+import { FlatList, Text, View, StyleSheet, Pressable } from 'react-native';
 import { fetchRecipeDetail, fetchRecipes, setActiveRecipe } from '../redux/slices/fetchRecipe';
 import Categories from '../components/categories';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import RecipeCard from '../components/Recipes/RecipeCard';
 import * as Progress from 'react-native-progress';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Props = {
 	recipe: string;
@@ -37,7 +38,7 @@ const Home = ({ navigation }) => {
 	};
 
 	return (
-		<View>
+		<View style={styles.listContainer}>
 			<Categories handleFetchRecipe={handleFetchRecipe} />
 			<Text style={styles.header}> List of different {activeRecipeName} menus</Text>
 			{recipeLoading ? (
@@ -56,8 +57,8 @@ export default Home;
 const styles = StyleSheet.create({
 	listContainer: {
 		marginHorizontal: 5,
-		marginBottom: 40,
-		// flex: 1,
+		marginBottom: 20,
+		flex: 1,
 		paddingBottom: 40,
 		marginTop: 20,
 	},
