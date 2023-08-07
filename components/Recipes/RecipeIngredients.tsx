@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { ScrollView } from 'react-native-gesture-handler';
+import { IngredientProp } from '../../utils/typings';
 
 const RecipeIngredients = ({ recipe }) => {
 	const { ingredients } = recipe;
@@ -16,11 +17,11 @@ const RecipeIngredients = ({ recipe }) => {
 			<Text style={styles.header}>Ingredients for {recipe.title}</Text>
 			<View style={styles.container}>
 				<ScrollView>
-					{ingredients.map((item) => (
+					{ingredients.map((item: IngredientProp) => (
 						<View key={item.id} style={styles.servingsText}>
 							<Icon name='check' size={16} color='coral' />
 							<Text style={styles.servingEle}>
-								{item?.quantity && <Text>{item?.quantity} </Text>}
+								{item?.quantity && <Text>{item?.quantity && item?.quantity.toFixed(2) !== '0' ? item?.quantity?.toFixed(2) : item?.quantity} </Text>}
 								{item?.unit && <Text>{item?.unit} </Text>}
 								{item?.description && <Text>{item?.description} </Text>}
 							</Text>
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		alignItems: 'center',
 		justifyContent: 'center',
+		marginVertical: 5,
 	},
 	servingsText: {
 		fontSize: 16,

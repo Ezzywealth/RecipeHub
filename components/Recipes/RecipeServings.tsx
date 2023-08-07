@@ -3,8 +3,20 @@ import { View, Text, StyleSheet } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import { decreasePeople, increasePeople } from '../../redux/slices/fetchRecipe';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const RecipeServings = ({ recipe }) => {
+	const dispatch = useAppDispatch();
+	const handleIncrease = () => {
+		dispatch(increasePeople(1));
+	};
+
+	const handleDecrease = () => {
+		dispatch(decreasePeople(1));
+	};
+
 	return (
 		<View style={globalStyles?.cardContainer}>
 			<View style={styles.container}>
@@ -15,8 +27,12 @@ const RecipeServings = ({ recipe }) => {
 				<View style={styles.servingEle}>
 					<IonIcons name='people' size={25} color='coral' />
 					<Text style={styles.servingsText}>{recipe.servings} Servings</Text>
-					<Icon name='minuscircleo' size={20} color='coral' />
-					<IonIcons name='add-circle-outline' size={25} color='coral' />
+					<TouchableOpacity onPress={handleDecrease}>
+						<Icon name='minuscircleo' size={20} color='coral' />
+					</TouchableOpacity>
+					<TouchableOpacity onPress={handleIncrease}>
+						<IonIcons name='add-circle-outline' size={25} color='coral' />
+					</TouchableOpacity>
 				</View>
 				<View>
 					<IonIcons name='bookmarks-outline' size={25} color='coral' />

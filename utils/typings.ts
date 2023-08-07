@@ -51,4 +51,5 @@ export type IngredientProp = {
 	description: string;
 	quantity: number;
 	unit: string;
+	id?: string;
 };

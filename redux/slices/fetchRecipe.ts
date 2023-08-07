@@ -54,6 +54,18 @@ const recipeSlice = createSlice({
 			state.activeRecipeName = action.payload.recipe;
 			state.activeRecipeId = action.payload.id;
 		},
+		increasePeople: (state, action) => {
+			state.recipeDetails.recipe.ingredients.forEach((item) => {
+				item.quantity = (item.quantity * (state.recipeDetails.recipe.servings + action.payload)) / state.recipeDetails.recipe.servings;
+			});
+			state.recipeDetails.recipe.servings += action.payload;
+		},
+		decreasePeople: (state, action) => {
+			state.recipeDetails.recipe.ingredients.forEach((item) => {
+				item.quantity = (item.quantity * (state.recipeDetails.recipe.servings - action.payload)) / state.recipeDetails.recipe.servings;
+			});
+			state.recipeDetails.recipe.servings -= action.payload;
+		},
 	},
 	extraReducers: (builders) => {
 		builders.addCase(fetchRecipes.pending, (state, action) => {
@@ -87,4 +99,4 @@ const recipeSlice = createSlice({
 
 export default recipeSlice.reducer;
 
-export const { setActiveCategory, setActiveRecipe } = recipeSlice.actions;
+export const { setActiveCategory, setActiveRecipe, increasePeople, decreasePeople } = recipeSlice.actions;

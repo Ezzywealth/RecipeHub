@@ -7,6 +7,7 @@ import RecipeDetails from './screens/RecipeDetails';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Animated } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function App() {
 	const av = new Animated.Value(0);
 	av.addListener(() => {
@@ -16,7 +17,22 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<NavigationContainer>
-				<Stack.Navigator>
+				<Stack.Navigator
+					screenOptions={{
+						headerStyle: {
+							backgroundColor: 'coral',
+						},
+						headerTintColor: '#fff',
+						headerTitleStyle: {
+							fontWeight: 'bold',
+							fontSize: 25,
+						},
+						headerBackTitle: '',
+						headerBackImage: ({ tintColor }) => <Icon name='arrow-back-ios' size={20} color={tintColor} />,
+						headerBackTitleStyle: {
+							fontSize: 15,
+						},
+					}}>
 					<Stack.Screen name='RecipesHub' component={Home} />
 					<Stack.Screen name='RecipeDetails' component={RecipeDetails} />
 				</Stack.Navigator>

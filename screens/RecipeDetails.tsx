@@ -9,7 +9,6 @@ import HowToCook from '../components/Recipes/HowToCook';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const RecipeDetails = () => {
-	// const [loading, setLoading] = useState(false);
 	const loading = useAppSelector((state) => state.recipeByIdLoading);
 	const { recipe } = useAppSelector((state) => state.recipeDetails);
 
